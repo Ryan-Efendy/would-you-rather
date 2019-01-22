@@ -30,7 +30,7 @@ class Question extends Component {
             {this.textTruncate(question.optionOne.text)}
           </Item.Description>
           <Item.Extra>
-            <Button primary floated="right" as={Link} to="/question">
+            <Button primary floated="right" as={Link} to={`/question/${question.id}`}>
               View Poll
               <Icon name="right chevron" />
             </Button>
