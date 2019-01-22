@@ -21,17 +21,23 @@ class App extends Component {
     return (
       <React.Fragment>
         <Nav />
-        <Switch>
-          <Route exact path="/" component={Tab} />
-          <Route path="/add" component={NewPoll} />
-          <Route path="/leaderboard" component={LeaderBoard} />
-          <Route path="/question" component={Poll} />
-          <Route component={Error} />
-          {/* <Login /> */}
-        </Switch>
+        {this.props.loading === true ? null : (
+          <Switch>
+            <Route exact path="/" component={Tab} />
+            <Route path="/add" component={NewPoll} />
+            <Route path="/leaderboard" component={LeaderBoard} />
+            <Route path="/question" component={Poll} />
+            <Route component={Error} />
+            {/* <Login /> */}
+          </Switch>
+        )}
       </React.Fragment>
     );
   }
 }
 
-export default connect()(App)
+const mapStateToProps = ({ authedUser }) => ({
+  loading: authedUser === null
+});
+
+export default connect(mapStateToProps)(App);

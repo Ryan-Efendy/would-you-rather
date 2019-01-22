@@ -1,59 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Tab, Grid, Item, Button, Icon, Container } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Question from './Question';
 
-const panes = [
+const panes = ids => [
   {
-    menuItem: 'Unanswered Quetsions',
+    menuItem: 'Unanswered Questions',
     render: () => (
       <Item.Group divided>
-        <Item>
-          <Item.Image
-            size="tiny"
-            src="https://react.semantic-ui.com/images/avatar/large/jenny.jpg"
-          />
-
-          <Item.Content>
-            <Item.Header as="a">Foo asked</Item.Header>
-            <Item.Meta>Would You Rather</Item.Meta>
-            <Item.Description />
-            <Item.Extra>
-              Additional Details
-              <Button primary floated="right" as={Link} to='/question'>
-                View Poll
-                <Icon name="right chevron" />
-              </Button>
-            </Item.Extra>
-          </Item.Content>
-        </Item>
-
-        <Item>
-          <Item.Image
-            size="tiny"
-            src="https://react.semantic-ui.com/images/avatar/large/justen.jpg"
-          />
-
-          <Item.Content>
-            <Item.Header as="a">Bar asked</Item.Header>
-            <Item.Meta>Would You Rather</Item.Meta>
-            <Item.Description />
-            <Item.Extra>Additional Details</Item.Extra>
-          </Item.Content>
-        </Item>
-
-        <Item>
-          <Item.Image
-            size="tiny"
-            src="https://react.semantic-ui.com/images/avatar/large/veronika.jpg"
-          />
-
-          <Item.Content>
-            <Item.Header as="a">Baz asked</Item.Header>
-            <Item.Meta>Would You Rather</Item.Meta>
-            <Item.Description />
-            <Item.Extra>Additional Details</Item.Extra>
-          </Item.Content>
-        </Item>
+        {ids.map(id => (
+          <Question id={id} key={id}/>
+        ))}
       </Item.Group>
     )
   },
@@ -73,7 +31,7 @@ const panes = [
             <Item.Description />
             <Item.Extra>
               Additional Details
-              <Button primary floated="right" as={Link} to='/question'>
+              <Button primary floated="right" as={Link} to="/question">
                 View Poll
                 <Icon name="right chevron" />
               </Button>
@@ -85,14 +43,27 @@ const panes = [
   }
 ];
 
-const MyTab = () => (
-  <Container text style={{ paddingTop: 20 }}>
-    <Grid centered >
-      <Grid.Column>
-        <Tab panes={panes} />
-      </Grid.Column>
-    </Grid>
-  </Container>
-);
+class MyTab extends Component {
+  // state = {  }
 
-export default MyTab;
+  render() {
+    const { questionsIds } = this.props;
+    return (
+      <Container text style={{ paddingTop: 20 }}>
+        <Grid centered>
+          <Grid.Column>
+            <Tab panes={panes(questionsIds)} />
+          </Grid.Column>
+        </Grid>
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = ({ questions }) => ({
+  questionsIds: Object.keys(questions).sort(
+    (a, b) => questions[b].timestamp - questions[a].timestamp
+  )
+});
+
+export default connect(mapStateToProps)(MyTab);
