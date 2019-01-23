@@ -11,18 +11,18 @@ import Error from './Error';
 import { handleInitialData } from '../actions/shared';
 
 class App extends Component {
-
   componentDidMount = () => {
     this.props.dispatch(handleInitialData());
   };
 
   render = () => {
-    const { loading } = this.props;
+    const { authedUser } = this.props;
 
     return (
       <React.Fragment>
-        <Nav />
-        {loading === true ? null : (
+        {/* loading */}
+        <Nav authedUser={authedUser} />
+        {authedUser && (
           <Switch>
             <Route exact path="/" component={Tab} />
             <Route path="/add" component={NewPoll} />
@@ -34,11 +34,11 @@ class App extends Component {
         )}
       </React.Fragment>
     );
-  }
+  };
 }
 
 const mapStateToProps = ({ authedUser }) => ({
-  loading: authedUser === null
+  authedUser
 });
 
 export default withRouter(connect(mapStateToProps)(App));

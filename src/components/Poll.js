@@ -13,15 +13,19 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Poll extends Component {
-  state = { isAnswered: true };
+  state = { isAnswered: false };
 
   handleChange = (e, { value }) => this.setState({ value });
 
-  // answered
+  handleSubmit = () => this.setState({ isAnswered: true });
+
   render = () => {
-    debugger;
     const { value, isAnswered } = this.state;
-    const {question, user} = this.props;
+    const { question, user } = this.props;
+
+    const questionOne = question.optionOne.votes.length;
+    const questionTwo = question.optionTwo.votes.length;
+    const total = questionOne + questionTwo;
 
     return (
       <Container text>
@@ -29,15 +33,35 @@ class Poll extends Component {
           <Header as="h3" textAlign="center" style={{ margin: 10 }}>
             {isAnswered ? `Asked by ${user.name}` : `${user.name} asks`}
           </Header>
-
           <Grid.Row>
             <Grid.Column width={4}>
               <Image src={user.avatarURL} />
             </Grid.Column>
             <Grid.Column width={12}>
-              {isAnswered ? (
+              {!isAnswered ? (
                 <React.Fragment>
-                  <Header as="h4">Result</Header>
+                  <Form onSubmit={this.handleSubmit}>
+                    <Form.Group grouped>
+                      <Header as="h3">Would You Rather</Header>
+                      <Form.Radio
+                        label={question.optionOne.text}
+                        value="optionOne"
+                        checked={value === 'optionOne'}
+                        onChange={this.handleChange}
+                      />
+                      <Form.Radio
+                        label={question.optionTwo.text}
+                        value="optionTwo"
+                        checked={value === 'optionTwo'}
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                    <Form.Button>Submit</Form.Button>
+                  </Form>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <Header as="h3">Result</Header>
                   <label>{question.optionOne.text}</label>
                   {/* todo: styled component? */}
                   <Icon
@@ -48,42 +72,19 @@ class Poll extends Component {
                     style={{ marginLeft: 10 }}
                   />
                   <Progress
-                    value="4"
-                    total="5"
+                    value={questionOne}
+                    total={total}
                     progress="percent"
-                    label="2 out of 3 votes"
+                    label={`${questionOne} out of ${total} votes`}
                   />
 
                   <label>{question.optionTwo.text}</label>
                   <Progress
-                    value="1"
-                    total="5"
+                    value={questionTwo}
+                    total={total}
                     progress="percent"
-                    label="1 out of 3 votes"
+                    label={`${questionTwo} out of ${total} votes`}
                   />
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <Form>
-                    <Form.Group grouped>
-                      <label>Would You Rather</label>
-                      <Form.Radio
-                        label={question.optionOne.text}
-                        value="one"
-                        checked={value === 'one'}
-                        onChange={this.handleChange}
-                      />
-                      <Form.Radio
-                        label={question.optionTwo.text}
-                        value="two"
-                        checked={value === 'two'}
-                        onChange={this.handleChange}
-                      />
-                    </Form.Group>
-                    <Button as={Link} to="/">
-                      Submit
-                    </Button>
-                  </Form>
                 </React.Fragment>
               )}
             </Grid.Column>
@@ -94,9 +95,16 @@ class Poll extends Component {
   };
 }
 
-const mapStateToProps = ({ authedUser, users, questions }, {match: {params: {id}}}) => ({
+const mapStateToProps = (
+  { authedUser, users, questions },
+  {
+    match: {
+      params: { id }
+    }
+  }
+) => ({
   question: questions[id],
-  user: users[questions[id].author],
+  user: users[questions[id].author]
 });
 
 export default connect(mapStateToProps)(Poll);
