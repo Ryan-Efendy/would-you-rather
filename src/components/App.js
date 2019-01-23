@@ -11,22 +11,23 @@ import Error from './Error';
 import { handleInitialData } from '../actions/shared';
 
 class App extends Component {
-  // state = {  }
 
   componentDidMount = () => {
     this.props.dispatch(handleInitialData());
   };
 
-  render() {
+  render = () => {
+    const { loading } = this.props;
+
     return (
       <React.Fragment>
         <Nav />
-        {this.props.loading === true ? null : (
+        {loading === true ? null : (
           <Switch>
             <Route exact path="/" component={Tab} />
             <Route path="/add" component={NewPoll} />
             <Route path="/leaderboard" component={LeaderBoard} />
-            <Route path="/question" component={Poll} />
+            <Route path="/question/:id" component={Poll} />
             <Route component={Error} />
             {/* <Login /> */}
           </Switch>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Tab, Grid, Item, Button, Icon, Container } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ const panes = ids => [
     render: () => (
       <Item.Group divided>
         {ids.map(id => (
-          <Question id={id} key={id}/>
+          <Question id={id} key={id} />
         ))}
       </Item.Group>
     )
@@ -43,22 +43,15 @@ const panes = ids => [
   }
 ];
 
-class MyTab extends Component {
-  // state = {  }
-
-  render() {
-    const { questionsIds } = this.props;
-    return (
-      <Container text style={{ paddingTop: 20 }}>
-        <Grid centered>
-          <Grid.Column>
-            <Tab panes={panes(questionsIds)} />
-          </Grid.Column>
-        </Grid>
-      </Container>
-    );
-  }
-}
+const MyTab = ({ questionsIds }) => (
+    <Container text style={{ paddingTop: 20 }}>
+      <Grid centered>
+        <Grid.Column>
+          <Tab panes={panes(questionsIds)} />
+        </Grid.Column>
+      </Grid>
+    </Container>
+  );
 
 const mapStateToProps = ({ questions }) => ({
   questionsIds: Object.keys(questions).sort(

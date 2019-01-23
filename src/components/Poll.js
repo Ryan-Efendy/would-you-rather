@@ -18,6 +18,8 @@ class Poll extends Component {
   // answered
   render = () => {
     const { value, isAnswered } = this.state;
+    console.log(this.props);
+    debugger;
     return (
       <Container text>
         <Grid centered celled>
@@ -75,7 +77,9 @@ class Poll extends Component {
                         onChange={this.handleChange}
                       />
                     </Form.Group>
-                    <Form.Button as={Link} to='/'>Submit</Form.Button>
+                    <Form.Button as={Link} to="/">
+                      Submit
+                    </Form.Button>
                   </Form>
                 </React.Fragment>
               )}

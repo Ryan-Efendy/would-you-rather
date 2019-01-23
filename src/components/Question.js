@@ -4,25 +4,20 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Question extends Component {
-  state = {};
-
   textTruncate = (str, length = 15) => {
     const ending = '...';
     if (str.length > length) {
       return str.substring(0, length - ending.length) + ending;
     }
     return str;
-  }
+  };
 
-  render() {
+  render = () => {
     const { question, user, authedUser } = this.props;
+
     return (
       <Item>
-        <Item.Image
-          size="tiny"
-          src={user.avatarURL}
-        />
-
+        <Item.Image size="tiny" src={user.avatarURL} />
         <Item.Content>
           <Item.Header as="a">{`${user.name} asked`}</Item.Header>
           <Item.Meta>Would You Rather</Item.Meta>
@@ -30,7 +25,12 @@ class Question extends Component {
             {this.textTruncate(question.optionOne.text)}
           </Item.Description>
           <Item.Extra>
-            <Button primary floated="right" as={Link} to={`/question/${question.id}`}>
+            <Button
+              primary
+              floated="right"
+              as={Link}
+              to={`/question/${question.id}`}
+            >
               View Poll
               <Icon name="right chevron" />
             </Button>
@@ -38,7 +38,7 @@ class Question extends Component {
         </Item.Content>
       </Item>
     );
-  }
+  };
 }
 
 const mapStateToProps = ({ authedUser, users, questions }, { id }) => ({
