@@ -6,41 +6,44 @@ import {
   Header,
   Form,
   Progress,
-  Icon
+  Icon,
+  Button
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Poll extends Component {
-  state = { isAnswered: false };
+  state = { isAnswered: true };
 
   handleChange = (e, { value }) => this.setState({ value });
 
   // answered
   render = () => {
-    const { value, isAnswered } = this.state;
-    console.log(this.props);
     debugger;
+    const { value, isAnswered } = this.state;
+    const {question, user} = this.props;
+
     return (
       <Container text>
         <Grid centered celled>
           <Header as="h3" textAlign="center" style={{ margin: 10 }}>
-            {isAnswered ? 'Asked by Foo Bar' : 'Foo Bar asks'}
+            {isAnswered ? `Asked by ${user.name}` : `${user.name} asks`}
           </Header>
+
           <Grid.Row>
             <Grid.Column width={4}>
-              <Image src="https://react.semantic-ui.com/images/avatar/large/jenny.jpg" />
+              <Image src={user.avatarURL} />
             </Grid.Column>
             <Grid.Column width={12}>
               {isAnswered ? (
                 <React.Fragment>
                   <Header as="h4">Result</Header>
-                  <label>Would you rather X:</label>
+                  <label>{question.optionOne.text}</label>
                   {/* todo: styled component? */}
                   <Icon
                     name="check"
                     circular
                     color="green"
-                    // size="large"
                     inverted
                     style={{ marginLeft: 10 }}
                   />
@@ -51,7 +54,7 @@ class Poll extends Component {
                     label="2 out of 3 votes"
                   />
 
-                  <label>Would you rather Y:</label>
+                  <label>{question.optionTwo.text}</label>
                   <Progress
                     value="1"
                     total="5"
@@ -65,21 +68,21 @@ class Poll extends Component {
                     <Form.Group grouped>
                       <label>Would You Rather</label>
                       <Form.Radio
-                        label="Small"
-                        value="sm"
-                        checked={value === 'sm'}
+                        label={question.optionOne.text}
+                        value="one"
+                        checked={value === 'one'}
                         onChange={this.handleChange}
                       />
                       <Form.Radio
-                        label="Medium"
-                        value="md"
-                        checked={value === 'md'}
+                        label={question.optionTwo.text}
+                        value="two"
+                        checked={value === 'two'}
                         onChange={this.handleChange}
                       />
                     </Form.Group>
-                    <Form.Button as={Link} to="/">
+                    <Button as={Link} to="/">
                       Submit
-                    </Form.Button>
+                    </Button>
                   </Form>
                 </React.Fragment>
               )}
@@ -91,4 +94,9 @@ class Poll extends Component {
   };
 }
 
-export default Poll;
+const mapStateToProps = ({ authedUser, users, questions }, {match: {params: {id}}}) => ({
+  question: questions[id],
+  user: users[questions[id].author],
+});
+
+export default connect(mapStateToProps)(Poll);
