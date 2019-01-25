@@ -11,13 +11,33 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { handdleAnswerQuestion } from '../actions/questions';
 
 class Poll extends Component {
   state = { isAnswered: false };
 
+  componentDidMount = () => {
+    const { question, users, authedUser } = this.props;
+    if (question.id in users[authedUser].answers) {
+      this.setState({ isAnswered: true });
+    }
+  }
+
   handleChange = (e, { value }) => this.setState({ value });
 
-  handleSubmit = () => this.setState({ isAnswered: true });
+  handleSubmit = () => {
+    const { dispatch, question, authedUser } = this.props;
+    const { value } = this.state;
+
+    this.setState({ isAnswered: true });
+    dispatch(
+      handdleAnswerQuestion({
+        qid: question.id,
+        answer: value,
+        authedUser
+      })
+    );
+  };
 
   render = () => {
     const { value, isAnswered } = this.state;
@@ -64,13 +84,15 @@ class Poll extends Component {
                   <Header as="h3">Result</Header>
                   <label>{question.optionOne.text}</label>
                   {/* todo: styled component? */}
-                  <Icon
-                    name="check"
-                    circular
-                    color="green"
-                    inverted
-                    style={{ marginLeft: 10 }}
-                  />
+                  {value === 'optionOne' && (
+                    <Icon
+                      name="check"
+                      circular
+                      color="green"
+                      inverted
+                      style={{ marginLeft: 10 }}
+                    />
+                  )}
                   <Progress
                     value={questionOne}
                     total={total}
@@ -79,6 +101,15 @@ class Poll extends Component {
                   />
 
                   <label>{question.optionTwo.text}</label>
+                  {value === 'optionTwo' && (
+                    <Icon
+                      name="check"
+                      circular
+                      color="green"
+                      inverted
+                      style={{ marginLeft: 10 }}
+                    />
+                  )}
                   <Progress
                     value={questionTwo}
                     total={total}
@@ -104,7 +135,9 @@ const mapStateToProps = (
   }
 ) => ({
   question: questions[id],
-  user: users[questions[id].author]
+  user: users[questions[id].author],
+  users,
+  authedUser
 });
 
 export default connect(mapStateToProps)(Poll);

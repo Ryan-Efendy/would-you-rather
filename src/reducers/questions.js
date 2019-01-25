@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS } from '../actions/questions';
+import { RECEIVE_QUESTIONS, ANSWER_QUESTION } from '../actions/questions';
 
 const questions = (state = {}, action) => {
   switch (action.type) {
@@ -7,6 +7,27 @@ const questions = (state = {}, action) => {
         ...state,
         ...action.questions
       };
+    case ANSWER_QUESTION:
+      return action.answer === "optionOne" ?
+       {
+        ...state,
+        [action.qid]: {
+          ...state[action.qid],
+          optionOne: {
+            ...state[action.qid].optionOne,
+            votes: state[action.qid].optionOne.votes.concat([action.authedUser])
+          }
+        }
+      } : {
+        ...state,
+        [action.qid]: {
+          ...state[action.qid],
+          optionTwo: {
+            ...state[action.qid].optionTwo,
+            votes: state[action.qid].optionTwo.votes.concat([action.authedUser])
+          }
+        }
+      }
     default:
       return state;
   }
