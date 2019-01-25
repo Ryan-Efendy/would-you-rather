@@ -6,8 +6,7 @@ import {
   Header,
   Form,
   Progress,
-  Icon,
-  Button
+  Icon
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -18,6 +17,7 @@ class Poll extends Component {
 
   componentDidMount = () => {
     const { question, users, authedUser } = this.props;
+
     if (question.id in users[authedUser].answers) {
       this.setState({ isAnswered: true });
     }
@@ -26,10 +26,12 @@ class Poll extends Component {
   handleChange = (e, { value }) => this.setState({ value });
 
   handleSubmit = () => {
-    const { dispatch, question, authedUser } = this.props;
+    const { dispatch, question, users, authedUser } = this.props;
     const { value } = this.state;
 
     this.setState({ isAnswered: true });
+    users[authedUser].answers[question.id] = value;
+
     dispatch(
       handdleAnswerQuestion({
         qid: question.id,
@@ -40,7 +42,7 @@ class Poll extends Component {
   };
 
   render = () => {
-    const { value, isAnswered } = this.state;
+    const { isAnswered, value } = this.state;
     const { question, user } = this.props;
 
     const questionOne = question.optionOne.votes.length;
@@ -84,7 +86,7 @@ class Poll extends Component {
                   <Header as="h3">Result</Header>
                   <label>{question.optionOne.text}</label>
                   {/* todo: styled component? */}
-                  {value === 'optionOne' && (
+                  {user.answers[question.id] === 'optionOne' && (
                     <Icon
                       name="check"
                       circular
@@ -101,7 +103,7 @@ class Poll extends Component {
                   />
 
                   <label>{question.optionTwo.text}</label>
-                  {value === 'optionTwo' && (
+                  {user.answers[question.id] === 'optionTwo' && (
                     <Icon
                       name="check"
                       circular
