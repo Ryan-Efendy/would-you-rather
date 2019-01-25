@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import LoadingBar from 'react-redux-loading';
 import Nav from './Nav';
 import Tab from './Tab';
 import Poll from './Poll';
@@ -22,6 +23,7 @@ class App extends Component {
       <React.Fragment>
         {/* loading */}
         <Nav authedUser={authedUser} />
+        <LoadingBar />
         {authedUser && (
           <Switch>
             <Route exact path="/" component={Tab} />
