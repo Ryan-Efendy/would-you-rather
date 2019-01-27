@@ -1,7 +1,9 @@
-import { saveQuestionAnswer } from '../utils/api';
+import { showLoading, hideLoading } from 'react-redux-loading'
+import { saveQuestionAnswer, saveQuestion } from '../utils/api';
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const ANSWER_QUESTION = 'ANSWER_QUESTION';
+export const ADD_QUESTION = 'ADD_QUESTION';
 
 export const receiveQuestions = questions => ({
   type: RECEIVE_QUESTIONS,
@@ -24,3 +26,22 @@ export const handdleAnswerQuestion = info => dispatch => {
     alert('The was an error liking the tweet. Try again.');
   });
 };
+
+const addQuestion = question => ({
+  type: ADD_QUESTION,
+  question
+})
+
+export const handleAddQuestion = (optionOneText, optionTwoText) => (dispatch, getState) => {
+  const { authedUser: author  } = getState();
+
+  dispatch(showLoading())
+
+  return saveQuestion({
+    author,
+    optionOneText,
+    optionTwoText
+  })
+  .then(question => dispatch(addQuestion(question)))
+  .then(() => dispatch(hideLoading()))
+}
