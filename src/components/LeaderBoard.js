@@ -1,5 +1,5 @@
 import React from 'react';
-import { Item, Grid, Container, Rating, Label } from 'semantic-ui-react';
+import { Item, Grid, Container, Rating, Label, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 const LeaderBoard = ({users}) => users.map((user, i) => (
@@ -28,6 +28,7 @@ const LeaderBoard = ({users}) => users.map((user, i) => (
           </Item.Group>
         </Grid.Column>
         <Grid.Column width={4} textAlign="center" verticalAlign="middle">
+          <Header as="h3" color="teal" textAlign="center">Score</Header>
           <Label circular color="teal" size="massive">
             {Object.keys(user.answers).length + user.questions.length}
           </Label>

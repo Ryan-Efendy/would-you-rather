@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Container, Header, Button, Form } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import { handleAddQuestion } from '../actions/questions'
 
 class NewPoll extends Component {
@@ -14,8 +15,6 @@ class NewPoll extends Component {
   handleSubmit = () => {
     const { optionOneText, optionTwoText } = this.state;
     const { dispatch } = this.props
-
-    console.log(optionOneText, optionTwoText);
 
     dispatch(handleAddQuestion(optionOneText, optionTwoText))
 
@@ -68,4 +67,6 @@ class NewPoll extends Component {
   }
 }
 
-export default NewPoll;
+
+
+export default connect()(NewPoll);
