@@ -3,15 +3,10 @@ import { Menu, Icon, Container } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 export default class Nav extends Component {
-  state = {
-    activeItem: 'home'
-  };
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render = () => {
-    const { activeItem } = this.state;
-    const { name, isLogin, onLogin } = this.props;
+    // const { activeItem } = this.state;
+    const { name, isLogin, onLogin, activeItem, onActiveChange } = this.props;
 
     return (
       <Container>
@@ -19,7 +14,7 @@ export default class Nav extends Component {
           <Menu.Item
             name="home"
             active={activeItem === 'home'}
-            onClick={this.handleItemClick}
+            onClick={onActiveChange}
             as={Link}
             to="/"
           >
@@ -29,7 +24,7 @@ export default class Nav extends Component {
           <Menu.Item
             name="newQuestion"
             active={activeItem === 'newQuestion'}
-            onClick={this.handleItemClick}
+            onClick={onActiveChange}
             as={Link}
             to="/add"
           >
@@ -39,7 +34,7 @@ export default class Nav extends Component {
           <Menu.Item
             name="leaderBoard"
             active={activeItem === 'leaderBoard'}
-            onClick={this.handleItemClick}
+            onClick={onActiveChange}
             as={Link}
             to="/leaderboard"
           >

@@ -13,7 +13,7 @@ import { handleInitialData } from '../actions/shared';
 import { setAuthedUser } from '../actions/authedUser';
 
 class App extends Component {
-  state = { isLogin: false };
+  state = { isLogin: false, activeItem: 'home' };
 
   componentDidMount = () => {
     this.props.dispatch(handleInitialData());
@@ -28,9 +28,13 @@ class App extends Component {
     });
   };
 
+  handleActiveClick = (e, { name }) => this.setState({ activeItem: name });
+
+  handleNavChange = activeItem => this.setState({ activeItem });
+
   render = () => {
     const { authedUser, users } = this.props;
-    const { isLogin } = this.state;
+    const { isLogin, activeItem } = this.state;
 
     return (
       <React.Fragment>
@@ -40,14 +44,18 @@ class App extends Component {
               ? users[authedUser].name
               : ''
           }
+          activeItem={activeItem}
           isLogin={isLogin}
           onLogin={this.handleUpdateLogin}
+          onActiveChange={this.handleActiveClick}
         />
         <LoadingBar />
         {authedUser && Object.entries(users).length ? (
           <Switch>
             <Route exact path="/" component={Tab} />
-            <Route path="/add" component={NewPoll} />
+            <Route path="/add" render={props => (
+                <NewPoll {...props} onNavChange={this.handleNavChange} />
+              )} />
             <Route path="/leaderboard" component={LeaderBoard} />
             <Route path="/question/:id" component={Poll} />
             <Route
