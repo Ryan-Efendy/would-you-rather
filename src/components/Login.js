@@ -47,10 +47,11 @@ class Login extends Component {
 
   handleSubmit = () => {
     const { value } = this.state;
-    const { dispatch, history, onLogin, location } = this.props;
+    const { dispatch, history, onLogin, location, onNavChange } = this.props;
 
     onLogin();
     dispatch(setAuthedUser(value));
+    onNavChange(location.pathname)
     history.push(location.pathname);
   };
 

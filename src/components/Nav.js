@@ -7,7 +7,7 @@ const Nav = ({ name, isLogin, onLogin, activeItem, onActiveChange }) => (
       <Menu size="large" pointing secondary>
         <Menu.Item
           name="home"
-          active={activeItem === 'home'}
+          active={activeItem === 'home' || activeItem === '/'}
           onClick={onActiveChange}
           as={Link}
           to="/"
@@ -17,7 +17,7 @@ const Nav = ({ name, isLogin, onLogin, activeItem, onActiveChange }) => (
 
         <Menu.Item
           name="newQuestion"
-          active={activeItem === 'newQuestion'}
+          active={activeItem === 'newQuestion' || activeItem === '/add'}
           onClick={onActiveChange}
           as={Link}
           to="/add"
@@ -27,7 +27,7 @@ const Nav = ({ name, isLogin, onLogin, activeItem, onActiveChange }) => (
 
         <Menu.Item
           name="leaderBoard"
-          active={activeItem === 'leaderBoard'}
+          active={activeItem === 'leaderBoard' || activeItem === '/leaderboard'}
           onClick={onActiveChange}
           as={Link}
           to="/leaderboard"
@@ -43,7 +43,6 @@ const Nav = ({ name, isLogin, onLogin, activeItem, onActiveChange }) => (
             </Menu.Item>
             <Menu.Item
               name="logout"
-              active={activeItem === 'logout'}
               onClick={onLogin}
             />
           </Menu.Menu>

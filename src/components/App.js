@@ -61,13 +61,13 @@ class App extends Component {
             <Route
               path="/login"
               render={props => (
-                <Login {...props} onLogin={this.handleUpdateLogin} />
+                <Login {...props} onLogin={this.handleUpdateLogin} onNavChange={this.handleNavChange} />
               )}
             />
             <Route component={Error} />
           </Switch>
         ) : (
-          <Login {...this.props} onLogin={this.handleUpdateLogin} />
+          <Login {...this.props} onLogin={this.handleUpdateLogin} onNavChange={this.handleNavChange} />
         )}
       </React.Fragment>
     );
