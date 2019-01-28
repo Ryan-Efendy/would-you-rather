@@ -136,6 +136,7 @@ const mapStateToProps = (
 ) => ({
   question: questions[id],
   users,
+  user: users[questions[id].author],
   authedUser
 });
 
