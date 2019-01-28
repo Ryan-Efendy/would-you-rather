@@ -11,7 +11,8 @@ export default class Nav extends Component {
 
   render = () => {
     const { activeItem } = this.state;
-    const { name } = this.props;
+    const { name, authedUser } = this.props;
+    debugger;
 
     return (
       <Container>
@@ -46,17 +47,19 @@ export default class Nav extends Component {
             Leader Board
           </Menu.Item>
 
-          <Menu.Menu position="right">
-            <Menu.Item>
-              <Icon name="user" />
-              {`Hello ${name}`}
-            </Menu.Item>
-            <Menu.Item
-              name="logout"
-              active={activeItem === 'logout'}
-              onClick={this.handleItemClick}
-            />
-          </Menu.Menu>
+          {/* {path === '/login' && (
+            <Menu.Menu position="right">
+              <Menu.Item>
+                <Icon name="user" />
+                {`Hello ${name}`}
+              </Menu.Item>
+              <Menu.Item
+                name="logout"
+                active={activeItem === 'logout'}
+                onClick={this.handleItemClick}
+              />
+            </Menu.Menu>
+          )} */}
         </Menu>
       </Container>
     );

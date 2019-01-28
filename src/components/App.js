@@ -21,16 +21,16 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <Nav name={authedUser && Object.entries(users).length ? users[authedUser].name : ''} />
-        <LoadingBar />
+        <Nav authedUser={authedUser} name={authedUser && Object.entries(users).length ? users[authedUser].name : ''}/>
+        <LoadingBar/>
         {(authedUser && Object.entries(users).length)  && (
           <Switch>
             <Route exact path="/" component={Tab} />
             <Route path="/add" component={NewPoll} />
             <Route path="/leaderboard" component={LeaderBoard} />
             <Route path="/question/:id" component={Poll} />
+            <Route path="/login" component={Login} />
             <Route component={Error} />
-            {/* <Login /> */}
           </Switch>
         )}
       </React.Fragment>
