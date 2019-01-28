@@ -14,7 +14,7 @@ class NewPoll extends Component {
 
   handleSubmit = () => {
     const { optionOneText, optionTwoText } = this.state;
-    const { dispatch } = this.props
+    const { dispatch, history } = this.props
 
     dispatch(handleAddQuestion(optionOneText, optionTwoText))
 
@@ -22,6 +22,8 @@ class NewPoll extends Component {
       optionOneText: '',
       optionTwoText: ''
     }));
+
+    history.push('/');
   };
 
   render = () => {
