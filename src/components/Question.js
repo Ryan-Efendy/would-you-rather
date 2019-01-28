@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Question extends Component {
-
   textTruncate = (str, length = 15) => {
     const ending = '...';
     if (str.length > length) {

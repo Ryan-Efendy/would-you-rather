@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Container, Header, Button, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { handleAddQuestion } from '../actions/questions'
+import { handleAddQuestion } from '../actions/questions';
 
 class NewPoll extends Component {
   state = { optionOneText: '', optionTwoText: '' };
@@ -14,9 +14,9 @@ class NewPoll extends Component {
 
   handleSubmit = () => {
     const { optionOneText, optionTwoText } = this.state;
-    const { dispatch, history, onNavChange } = this.props
+    const { dispatch, history, onNavChange } = this.props;
 
-    dispatch(handleAddQuestion(optionOneText, optionTwoText))
+    dispatch(handleAddQuestion(optionOneText, optionTwoText));
 
     this.setState(() => ({
       optionOneText: '',
@@ -58,7 +58,11 @@ class NewPoll extends Component {
                     value={optionTwoText}
                   />
                 </Form.Field>
-                <Button type="submit" fluid disabled={!optionOneText || !optionTwoText}>
+                <Button
+                  type="submit"
+                  fluid
+                  disabled={!optionOneText || !optionTwoText}
+                >
                   Submit
                 </Button>
               </Form>
@@ -67,9 +71,7 @@ class NewPoll extends Component {
         </Grid>
       </Container>
     );
-  }
+  };
 }
-
-
 
 export default connect()(NewPoll);

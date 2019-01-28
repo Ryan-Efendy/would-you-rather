@@ -71,7 +71,7 @@ class App extends Component {
                 />
               )}
             />
-            <Route path="/error" component={Error}/>
+            <Route path="/error" component={Error} />
             <Route component={Error} />
           </Switch>
         ) : (

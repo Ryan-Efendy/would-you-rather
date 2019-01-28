@@ -10,7 +10,7 @@ import {
   Dropdown
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { setAuthedUser } from '../actions/authedUser';
 
 const friendOptions = [
@@ -51,7 +51,7 @@ class Login extends Component {
 
     onLogin();
     dispatch(setAuthedUser(value));
-    onNavChange(location.pathname)
+    onNavChange(location.pathname);
     history.push(location.pathname);
   };
 
