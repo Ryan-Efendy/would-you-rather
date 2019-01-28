@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default class Nav extends Component {
   state = {
-    activeItem: ''
+    activeItem: 'home'
   };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
@@ -18,7 +18,7 @@ export default class Nav extends Component {
         <Menu size="large" pointing secondary>
           <Menu.Item
             name="home"
-            active={activeItem === ''}
+            active={activeItem === 'home'}
             onClick={this.handleItemClick}
             as={Link}
             to="/"
@@ -28,7 +28,7 @@ export default class Nav extends Component {
 
           <Menu.Item
             name="newQuestion"
-            active={activeItem === 'new'}
+            active={activeItem === 'newQuestion'}
             onClick={this.handleItemClick}
             as={Link}
             to="/add"
@@ -38,7 +38,7 @@ export default class Nav extends Component {
 
           <Menu.Item
             name="leaderBoard"
-            active={activeItem === 'leaderboard'}
+            active={activeItem === 'leaderBoard'}
             onClick={this.handleItemClick}
             as={Link}
             to="/leaderboard"
