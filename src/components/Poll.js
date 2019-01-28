@@ -25,11 +25,10 @@ class Poll extends Component {
   handleChange = (e, { value }) => this.setState({ value });
 
   handleSubmit = () => {
-    const { dispatch, question, users, authedUser } = this.props;
+    const { dispatch, question, authedUser } = this.props;
     const { value } = this.state;
 
     this.setState({ isAnswered: true });
-    users[authedUser].answers[question.id] = value;
 
     dispatch(
       handdleAnswerQuestion({
@@ -136,7 +135,6 @@ const mapStateToProps = (
   }
 ) => ({
   question: questions[id],
-  user: users[questions[id].author],
   users,
   authedUser
 });
