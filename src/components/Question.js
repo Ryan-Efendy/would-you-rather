@@ -14,7 +14,7 @@ class Question extends Component {
   };
 
   render = () => {
-    const { question, user, authedUser } = this.props;
+    const { question, user } = this.props;
 
     return (
       <Item>
