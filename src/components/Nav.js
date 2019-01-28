@@ -11,8 +11,7 @@ export default class Nav extends Component {
 
   render = () => {
     const { activeItem } = this.state;
-    const { name, authedUser } = this.props;
-    debugger;
+    const { name, isLogin, onLogin } = this.props;
 
     return (
       <Container>
@@ -47,7 +46,7 @@ export default class Nav extends Component {
             Leader Board
           </Menu.Item>
 
-          {/* {path === '/login' && (
+          {isLogin && (
             <Menu.Menu position="right">
               <Menu.Item>
                 <Icon name="user" />
@@ -56,10 +55,10 @@ export default class Nav extends Component {
               <Menu.Item
                 name="logout"
                 active={activeItem === 'logout'}
-                onClick={this.handleItemClick}
+                onClick={onLogin}
               />
             </Menu.Menu>
-          )} */}
+          )}
         </Menu>
       </Container>
     );
