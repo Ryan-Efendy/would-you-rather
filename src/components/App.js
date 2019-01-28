@@ -17,14 +17,13 @@ class App extends Component {
   };
 
   render = () => {
-    const { authedUser } = this.props;
+    const { authedUser, users } = this.props;
 
     return (
       <React.Fragment>
-        {/* loading */}
-        <Nav authedUser={authedUser} />
+        <Nav name={authedUser && Object.entries(users).length ? users[authedUser].name : ''} />
         <LoadingBar />
-        {authedUser && (
+        {(authedUser && Object.entries(users).length)  && (
           <Switch>
             <Route exact path="/" component={Tab} />
             <Route path="/add" component={NewPoll} />
@@ -39,8 +38,6 @@ class App extends Component {
   };
 }
 
-const mapStateToProps = ({ authedUser }) => ({
-  authedUser
-});
+const mapStateToProps = ({ authedUser, users }) => ({authedUser, users})
 
 export default withRouter(connect(mapStateToProps)(App));

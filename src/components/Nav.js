@@ -11,7 +11,7 @@ export default class Nav extends Component {
 
   render = () => {
     const { activeItem } = this.state;
-    const { authedUser } = this.props;
+    const { name } = this.props;
 
     return (
       <Container>
@@ -49,7 +49,7 @@ export default class Nav extends Component {
           <Menu.Menu position="right">
             <Menu.Item>
               <Icon name="user" />
-              {`Hello ${authedUser}`}
+              {`Hello ${name}`}
             </Menu.Item>
             <Menu.Item
               name="logout"
