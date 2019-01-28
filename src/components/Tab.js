@@ -43,14 +43,14 @@ const mapStateToProps = ({ questions, authedUser }) => ({
         !questions[id].optionOne.votes.includes(authedUser) &&
         !questions[id].optionTwo.votes.includes(authedUser)
     )
-    .sort((a, b) => questions[a].timestamp - questions[b].timestamp),
+    .sort((a, b) => questions[b].timestamp - questions[a].timestamp),
     answeredQuestionsIds: Object.keys(questions)
     .filter(
       id =>
         questions[id].optionOne.votes.includes(authedUser) ||
         questions[id].optionTwo.votes.includes(authedUser)
     )
-    .sort((a, b) => questions[a].timestamp - questions[b].timestamp)
+    .sort((a, b) => questions[b].timestamp - questions[a].timestamp)
 });
 
 export default connect(mapStateToProps)(MyTab);

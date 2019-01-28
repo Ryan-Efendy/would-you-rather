@@ -53,21 +53,33 @@ class App extends Component {
         {authedUser && Object.entries(users).length ? (
           <Switch>
             <Route exact path="/" component={Tab} />
-            <Route path="/add" render={props => (
+            <Route
+              path="/add"
+              render={props => (
                 <NewPoll {...props} onNavChange={this.handleNavChange} />
-              )} />
+              )}
+            />
             <Route path="/leaderboard" component={LeaderBoard} />
             <Route path="/question/:id" component={Poll} />
             <Route
               path="/login"
               render={props => (
-                <Login {...props} onLogin={this.handleUpdateLogin} onNavChange={this.handleNavChange} />
+                <Login
+                  {...props}
+                  onLogin={this.handleUpdateLogin}
+                  onNavChange={this.handleNavChange}
+                />
               )}
             />
+            <Route path="/error" component={Error}/>
             <Route component={Error} />
           </Switch>
         ) : (
-          <Login {...this.props} onLogin={this.handleUpdateLogin} onNavChange={this.handleNavChange} />
+          <Login
+            {...this.props}
+            onLogin={this.handleUpdateLogin}
+            onNavChange={this.handleNavChange}
+          />
         )}
       </React.Fragment>
     );

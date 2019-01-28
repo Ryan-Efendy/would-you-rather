@@ -9,6 +9,7 @@ import {
   Icon
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { handdleAnswerQuestion } from '../actions/questions';
 
 class Poll extends Component {
@@ -17,10 +18,10 @@ class Poll extends Component {
   componentDidMount = () => {
     const { question, users, authedUser } = this.props;
 
-    if (question.id in users[authedUser].answers) {
+    if (question && question.id in users[authedUser].answers) {
       this.setState({ isAnswered: true });
     }
-  }
+  };
 
   handleChange = (e, { value }) => this.setState({ value });
 
@@ -42,6 +43,10 @@ class Poll extends Component {
   render = () => {
     const { isAnswered, value } = this.state;
     const { question, user } = this.props;
+
+    if (!question && !user) {
+      return <Redirect to="/error" />;
+    }
 
     const questionOne = question.optionOne.votes.length;
     const questionTwo = question.optionTwo.votes.length;
@@ -134,9 +139,9 @@ const mapStateToProps = (
     }
   }
 ) => ({
-  question: questions[id],
+  question: id in questions ? questions[id] : null,
   users,
-  user: users[questions[id].author],
+  user: id in questions ? users[questions[id].author] : null,
   authedUser
 });
 
