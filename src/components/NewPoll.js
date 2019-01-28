@@ -56,7 +56,7 @@ class NewPoll extends Component {
                     value={optionTwoText}
                   />
                 </Form.Field>
-                <Button type="submit" fluid>
+                <Button type="submit" fluid disabled={!optionOneText || !optionTwoText}>
                   Submit
                 </Button>
               </Form>
