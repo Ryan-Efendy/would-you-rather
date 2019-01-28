@@ -8,7 +8,6 @@ import {
   Progress,
   Icon
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { handdleAnswerQuestion } from '../actions/questions';
 
