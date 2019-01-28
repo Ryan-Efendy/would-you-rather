@@ -10,6 +10,7 @@ import {
   Dropdown
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import { setAuthedUser } from '../actions/authedUser';
 
 const friendOptions = [
@@ -46,11 +47,11 @@ class Login extends Component {
 
   handleSubmit = () => {
     const { value } = this.state;
-    const { dispatch, history, onLogin } = this.props;
+    const { dispatch, history, onLogin, location } = this.props;
 
     onLogin();
     dispatch(setAuthedUser(value));
-    history.push('/');
+    history.push(location.pathname);
   };
 
   render() {
@@ -87,4 +88,4 @@ class Login extends Component {
   }
 }
 
-export default connect()(Login);
+export default withRouter(connect()(Login));

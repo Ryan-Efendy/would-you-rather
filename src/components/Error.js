@@ -1,5 +1,12 @@
 import React from 'react';
+import { Container, Message } from 'semantic-ui-react';
 
-const Error = () => (<h1>error, path does not exist!</h1>)
+const Error = () => (
+  <Container text style={{ paddingTop: 20 }}>
+    <Message negative>
+      <Message.Header>error, path does not exist!</Message.Header>
+    </Message>
+  </Container>
+);
 
 export default Error;
